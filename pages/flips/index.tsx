@@ -81,9 +81,10 @@ const FlipPage: FC = () => {
         >
           <textarea
             ref={textareaRef}
-            className="w-full focus:outline-none p-4 tracking-wide min-h-[600px] resize-none overflow-hidden"
+            className="w-full focus:outline-none p-4 tracking-wide min-h-[600px] resize-none overflow-hidden bg-transparent"
             onInput={() => resizeTextarea()}
             defaultValue={someArtcle}
+            style={{ color: 'rgba(0, 0, 0, 0)' }}
           ></textarea>
         </div>
         <div className="w-[200px] bg-white">{
