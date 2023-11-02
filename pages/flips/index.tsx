@@ -1,32 +1,7 @@
-import { useState, useEffect, useRef, FC } from 'react'
+import { useEffect, useRef, type FC } from 'react'
+import FlipCard, { type Cards } from '@/components/flips/card'
 
-type CardProps = {
-  children?: React.ReactNode
-  card: Cards
-}
-
-// 右侧小卡片组件
-const FlipCard: FC<CardProps> = ({ card }) => (
-  <div className=' bg-yellow-50 mb-2 rounded-md'>
-    <div className=' break-all'>{card.title}</div>
-    <div className=' break-all'>{card.content}</div>
-    <div className=' break-all'>{card.context}</div>
-    <div className=' break-all'>{card.synonyms}</div>
-  </div>
-)
-
-// Card 类型
-type Cards = {
-  title: string
-  index: number
-  content: string
-  context: string
-  synonyms: string
-}
-
-export default function FlipPage() {
-  const [count, setCount] = useState(0)
-
+const FlipPage: FC = () => {
   useEffect(() => {
     resizeTextarea()
   }, [])
@@ -118,3 +93,5 @@ export default function FlipPage() {
     </div>
   )
 }
+
+export default FlipPage
