@@ -60,14 +60,14 @@ const FlipPage: FC = () => {
       index: 2,
       content: 'contentcontentcontentcontentcontentcontentcontent',
       context: 'context context context context context context context ',
-      synonyms: 'asdasd asdasd asdasd',
+      synonyms: '' 
     },
     {
       title: 'hello world',
       index: 3,
       content: 'contentcontentcontentcontentcontentcontentcontent',
       context: 'context context context context context context context ',
-      synonyms: 'asdasd asdasd asdasd',
+      synonyms: 'asdasd asdasd asdasd sdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasd',
     },
   ]
 
@@ -87,7 +87,7 @@ const FlipPage: FC = () => {
             style={{ color: 'rgba(0, 0, 0, 0)' }}
           ></textarea>
         </div>
-        <div className="w-[200px] bg-white">{
+        <div className="w-[300px] bg-zinc-100">{
           cards.map((c) => (<FlipCard card={c} key={c.index}></FlipCard>))
         }</div>
       </div>

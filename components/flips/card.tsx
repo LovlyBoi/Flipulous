@@ -7,7 +7,7 @@ type CardProps = {
 
 // 右侧小卡片组件
 const FlipCard: FC<CardProps> = ({ card }) => (
-  <div className=' bg-yellow-50 mb-2 rounded-md'>
+  <div className=' bg-yellow-50 mb-2 rounded-md max-h-60 overflow-y-auto mr-8'>
     <div className=' break-all'>{card.title}</div>
     <div className=' break-all'>{card.content}</div>
     <div className=' break-all'>{card.context}</div>
