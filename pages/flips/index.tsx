@@ -1,5 +1,6 @@
 import { useEffect, useRef, type FC } from 'react'
 import FlipCard, { type Cards } from '@/components/flips/card'
+import Image from 'next/image'
 
 const FlipPage: FC = () => {
   useEffect(() => {
@@ -52,32 +53,85 @@ const FlipPage: FC = () => {
       title: 'hello world',
       index: 1,
       content: 'contentcontentcontentcontentcontentcontentcontent',
-      context: 'context context context context context context context ',
+      context:
+        'context context context context context context context ',
       synonyms: 'asdasd asdasd asdasd',
     },
     {
       title: 'hello world',
       index: 2,
       content: 'contentcontentcontentcontentcontentcontentcontent',
-      context: 'context context context context context context context ',
-      synonyms: '' 
+      context:
+        'context context context context context context context ',
+      synonyms: '',
     },
     {
       title: 'hello world',
       index: 3,
       content: 'contentcontentcontentcontentcontentcontentcontent',
-      context: 'context context context context context context context ',
-      synonyms: 'asdasd asdasd asdasd sdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasd',
+      context:
+        'context context context context context context context ',
+      synonyms:
+        'asdasd asdasd asdasd sdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasdsdasdasdasdasdasdasdasdasdasdasdasd',
     },
   ]
 
   return (
     <div className="flex flex-col absolute top-0 bottom-0 left-0 right-0 bg-zinc-100 px-8 font-serif">
-      <div className="text-center text-xl tracking-wider">Flipulous</div>
+      <div className="flex justify-between">
+        <div className="flex text-2xl tracking-wider">
+          <div className="group block max-w-xs mx-auto rounded-lg p-3 space-y-3  w-full">
+            <div className="">
+              <Image
+                src="/image/wode.png"
+                width={25}
+                height={15}
+                alt="mine"
+              />
+            </div>
+            <div className="group-hover:block hidden absolute bg-gray-100 w-[150px] h-[150px] rounded-md">
+              <div className="flex flex-col items-center">
+                <a
+                  href="javascript:;"
+                  className="flex text-blue-600 visited:text-red-600"
+                >
+                  生词本
+                </a>
+                <a
+                  href="javascript:;"
+                  className="flex text-blue-600 visited:text-red-600"
+                >
+                  收藏句子
+                </a>
+                <a
+                  href="javascript:;"
+                  className="flex text-blue-600 visited:text-red-600"
+                >
+                  收藏文章
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="flex">
+            <a href="">首页</a>
+          </div>
+        </div>
+        <div className="flex text-2xl tracking-wider">Flipulous</div>
+        <div className="flex text-2xl tracking-wider">
+          <a className="" href="javascript:;">
+            登录
+          </a>
+          <a href="">注册</a>
+        </div>
+      </div>
+
       <div className="flex justify-between">
         <div
           className="w-1/2 flex-1 overflow-y-auto bg-white mr-4 rounded-md text-lg"
-          style={{ minHeight: '600px', maxHeight: 'calc(100vh - 80px)' }}
+          style={{
+            minHeight: '600px',
+            maxHeight: 'calc(100vh - 80px)',
+          }}
         >
           <textarea
             ref={textareaRef}
@@ -87,9 +141,11 @@ const FlipPage: FC = () => {
             style={{ color: 'rgba(0, 0, 0, 0)' }}
           ></textarea>
         </div>
-        <div className="w-[300px] bg-zinc-100">{
-          cards.map((c) => (<FlipCard card={c} key={c.index}></FlipCard>))
-        }</div>
+        <div className="w-[300px] bg-zinc-100">
+          {cards.map((c) => (
+            <FlipCard card={c} key={c.index}></FlipCard>
+          ))}
+        </div>
       </div>
     </div>
   )
