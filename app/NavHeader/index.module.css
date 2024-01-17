@@ -1,0 +1,84 @@
+.nav-header {
+  --unit: 0.25rem;
+}
+
+.menu-movable {
+  cursor: pointer;
+  height: calc(5 * var(--unit));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  & > div {
+    width: calc(5 * var(--unit));
+    height: calc(0.5 * var(--unit));
+    border-radius: calc(0.5 * 0.5 * var(--unit));
+    /* @apply bg-gray-700 dark:bg-gray-200; */
+  }
+
+  &:hover {
+    & > div:first-of-type {
+      transition: transform 100ms ease-in-out;
+      transform: translateY(calc(1.5 * var(--unit))) rotate(90deg);
+    }
+    & > div:last-of-type {
+      transition: transform 100ms ease-in-out;
+      transform: translateY(calc(-1.5 * var(--unit))) rotate(90deg);
+    }
+  }
+}
+
+.cross-movable {
+  cursor: pointer;
+  height: calc(5 * var(--unit));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & > div {
+    width: calc(5 * var(--unit));
+    height: calc(0.5 * var(--unit));
+    border-radius: calc(0.5 * 0.5 * var(--unit));
+    /* @apply bg-gray-700 dark:bg-gray-200; */
+
+    &:nth-of-type(1) {
+      transform: translateY(1px) rotate(45deg);
+    }
+
+    &:nth-of-type(2) {
+      display: none;
+    }
+
+    &:nth-of-type(3) {
+      transform: translateY(-1px) rotate(-45deg);
+    }
+  }
+
+  &:hover {
+    & > div:nth-of-type(1) {
+      transform: translateY(1px);
+      transition: transform 100ms ease-in-out;
+    }
+    & > div:nth-of-type(3) {
+      transform: translateY(-1px);
+      transition: transform 100ms ease-in-out;
+    }
+  }
+}
+
+/* 没有动画的菜单按钮 */
+.menu-static {
+  height: calc(5 * var(--unit));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  cursor: pointer;
+
+  & > div {
+    width: calc(5 * var(--unit));
+    height: calc(0.5 * var(--unit));
+    border-radius: calc(0.5 * 0.5 * var(--unit));
+    /* @apply bg-gray-700 dark:bg-gray-200; */
+  }
+}

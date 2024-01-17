@@ -1,25 +1,57 @@
 {
-  "name": "flipulous",
+  "name": "siven-space-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "node ./scripts/installHusky.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "commit": "cz"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,css}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
-    "@types/node": "20.5.9",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "autoprefixer": "10.4.15",
-    "eslint": "8.48.0",
-    "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
-    "postcss": "8.4.29",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3",
-    "typescript": "5.2.2"
+    "axios": "^1.6.3",
+    "bloomfilter": "^0.0.18",
+    "dayjs": "^1.11.10",
+    "immer": "^10.0.3",
+    "masonry-layout": "^4.2.2",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-transition-group": "^4.4.5",
+    "react-use": "^17.4.3",
+    "sharp": "^0.33.2",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@commitlint/cz-commitlint": "^17.1.2",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-transition-group": "^4.4.10",
+    "autoprefixer": "^10.0.1",
+    "commitizen": "^4.2.5",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "postcss": "^8",
+    "prettier": "^3.1.1",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
