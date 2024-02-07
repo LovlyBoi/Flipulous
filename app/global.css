@@ -13,34 +13,55 @@ body {
   min-height: 100%;
 }
 
+body.stone-theme {
+  @apply bg-stone-100 dark:bg-stone-700;
+}
+
 /* 文本主题颜色 */
-.theme-gray-800-text {
+.text-l-gray-800-d-gray-200 {
   @apply text-gray-800 dark:text-gray-200;
 }
 
-.theme-gray-600-text {
+.text-l-gray-600-d-gray-200 {
   @apply text-gray-600 dark:text-gray-200;
 }
 
-.theme-gray-500-text {
+.text-l-gray-500-d-gray-300 {
   @apply text-gray-500 dark:text-gray-300;
 }
 
-.theme-gray-400-text {
+.text-l-gray-400-d-gray-400 {
   @apply text-gray-400 dark:text-gray-400;
 }
 
 /* 背景主题颜色 */
-.theme-white-800-bg {
+.bg-l-white-d-slate-800 {
   @apply bg-white dark:bg-slate-800;
 }
 
-.theme-white-600-bg {
+.bg-l-white-d-slate-700 {
+  @apply bg-white dark:bg-slate-700;
+}
+
+.bg-l-white-d-slate-600 {
   @apply bg-white dark:bg-slate-600;
 }
 
-.theme-white-400-bg {
+.bg-l-white-d-slate-400 {
   @apply bg-white dark:bg-slate-400;
+}
+
+.bg-l-gray-700-gray-200 {
+  @apply bg-gray-700 dark:bg-gray-200;
+}
+
+.bg-l-white\/90-d-slate-600 {
+  @apply bg-white/90 dark:bg-slate-600/90;
+}
+
+/* 阴影颜色 */
+.shadow-l-default-d-slate-400 {
+  @apply dark:shadow-slate-400/50;
 }
 
 /* React Transition 动画 */
@@ -111,25 +132,40 @@ body {
 }
 
 /* 从上面渐入的动画 */
-.fade-in-top-enter-active,
-.fade-in-top-leave-active {
-  transition: all 300ms;
-}
-
-.fade-in-top-enter-from,
-.fade-in-top-leave-to {
+.fade-in-top-enter,
+.fade-in-top-appear {
   opacity: 0;
   transform: translateY(-100%);
 }
 
-.fade-enter-active,
-.fade-leave-active {
+.fade-in-top-enter-active,
+.fade-in-top-appear-active {
+  opacity: 1;
+  transform: none;
+  transition: all 300ms;
+}
+
+.fade-in-top-enter-done,
+.fade-in-top-appear-done {
+  opacity: 1;
+  transform: none;
+}
+
+.fade-in-top-exit {
+  opacity: 1;
+  transform: none;
+}
+
+.fade-in-top-exit-active {
+  opacity: 0;
+  transform: translateY(-100%);
+  /* 回去的时候快一点，感觉会更好一些 */
   transition: all 200ms;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.fade-in-top-exit-done {
   opacity: 0;
+  transform: translateY(-100%);
 }
 
 /* marked 样式 */

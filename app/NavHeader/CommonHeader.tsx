@@ -13,7 +13,7 @@ type Props = {
   children?: ReactNode
 }
 
-const CommomHeader: FC<Props> = () => {
+const CommonHeader: FC<Props> = () => {
   const pathname = usePathname()
 
   const [expend, setExpend] = useState(false)
@@ -49,7 +49,7 @@ const CommomHeader: FC<Props> = () => {
           checked={expend}
           onChange={(e) => handleExpendChange(e.target.checked)}
         />
-        <section className="header theme-white-600-bg p-4 mt-2 rounded-lg shadow-sm flex justify-between sm:mt-4 md:mt-24 items-center">
+        <section className="header bg-l-white-d-slate-600 p-4 mt-2 rounded-lg shadow-sm flex justify-between sm:mt-4 md:mt-24 items-center">
           <div className="left flex items-center mr-6">
             <Link
               href="/"
@@ -65,12 +65,12 @@ const CommomHeader: FC<Props> = () => {
             <div className="flex flex-col ml-2">
               <Link
                 href="/"
-                className="theme-gray-600-text text-sm sm:text-lg tracking-wider"
+                className="text-l-gray-600-d-gray-200 text-sm sm:text-lg tracking-wider"
               >
-                浅秋细语
+                Flipulous
               </Link>
-              <div className="theme-gray-400-text text-xs tracking-wider font-thin">
-                智文的前端小站
+              <div className="text-l-gray-400-d-gray-400 text-xs tracking-wider font-thin">
+                Flip to translate
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ const CommomHeader: FC<Props> = () => {
             >
               <ul
                 ref={nodeRef}
-                className="nav-list theme-gray-400-text flex items-center h-8 overflow-x-hidden"
+                className="nav-list text-l-gray-400-d-gray-400 flex items-center h-8 overflow-x-hidden"
               >
                 {navList.map((nav) => (
                   <li
@@ -100,7 +100,12 @@ const CommomHeader: FC<Props> = () => {
                     {nav.render ? (
                       nav.render()
                     ) : (
-                      <Link href={nav.to ?? '/'}>{nav.title}</Link>
+                      <Link
+                        href={nav.to ?? '/'}
+                        className="group-hover:text-indigo-400 dark:group-hover:text-pink-300"
+                      >
+                        {nav.title}
+                      </Link>
                     )}
                   </li>
                 ))}
@@ -108,35 +113,30 @@ const CommomHeader: FC<Props> = () => {
             </CSSTransition>
           </nav>
 
-          <div
-            className={
-              'right flex items-center ml-6' + (isPhone ? '' : ' mr-4')
-            }
-          >
-            {/* 手机菜单按钮 */}
-            {isPhone && (
+          <div className="right flex items-center ml-6 md:mr-4">
+            {isPhone ? (
+              // 手机菜单按钮
               <div
-                className={styles['menu-static']}
+                className={`${styles['menu-static']} flex flex-col justify-around cursor-pointer`}
                 onClick={() => handlePhoneMenuClick()}
               >
-                <div className="bg-gray-700 dark:bg-gray-200" />
-                <div className="bg-gray-700 dark:bg-gray-200" />
-                <div className="bg-gray-700 dark:bg-gray-200" />
+                <div className="bg-l-gray-700-gray-200" />
+                <div className="bg-l-gray-700-gray-200" />
+                <div className="bg-l-gray-700-gray-200" />
               </div>
-            )}
-            {/* 大屏幕展开菜单按钮 */}
-            {!isPhone ? (
+            ) : (
+              // 大屏幕菜单按钮
               <label
                 htmlFor="extend-header-btn"
                 className={
                   expend ? styles['cross-movable'] : styles['menu-movable']
                 }
               >
-                <div className="bg-gray-700 dark:bg-gray-200" />
-                <div className="bg-gray-700 dark:bg-gray-200" />
-                <div className="bg-gray-700 dark:bg-gray-200" />
+                <div className="bg-l-gray-700-gray-200" />
+                <div className="bg-l-gray-700-gray-200" />
+                <div className="bg-l-gray-700-gray-200" />
               </label>
-            ) : null}
+            )}
           </div>
         </section>
       </div>
@@ -144,4 +144,4 @@ const CommomHeader: FC<Props> = () => {
   )
 }
 
-export default CommomHeader
+export default CommonHeader

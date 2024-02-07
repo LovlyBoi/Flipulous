@@ -2,6 +2,20 @@
   --unit: 0.25rem;
 }
 
+.sticky-header {
+  @media (max-width: 640px) {
+    width: calc(100% - 2 * var(--unit));
+  }
+
+  @media (min-width: 640px) {
+    width: calc(100% - 8 * var(--unit));
+  }
+
+  @media (min-width: 1024px) {
+    width: 1024px;
+  }
+}
+
 .menu-movable {
   cursor: pointer;
   height: calc(5 * var(--unit));
@@ -13,7 +27,7 @@
     width: calc(5 * var(--unit));
     height: calc(0.5 * var(--unit));
     border-radius: calc(0.5 * 0.5 * var(--unit));
-    /* @apply bg-gray-700 dark:bg-gray-200; */
+    /* @apply bg-gray-700 -gray-200; */
   }
 
   &:hover {
@@ -70,10 +84,6 @@
 /* 没有动画的菜单按钮 */
 .menu-static {
   height: calc(5 * var(--unit));
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  cursor: pointer;
 
   & > div {
     width: calc(5 * var(--unit));

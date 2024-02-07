@@ -1,0 +1,9 @@
+.cm-editor-wrapper {
+  & :global(.ͼ1.cm-focused) {
+    outline: none;
+  }
+
+  & :global(*) {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+}

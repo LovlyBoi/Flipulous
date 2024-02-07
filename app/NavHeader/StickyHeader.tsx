@@ -1,7 +1,6 @@
 'use client'
-import type { FC, ReactNode } from 'react'
+import { type FC, type ReactNode, forwardRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import ThemeSwitcher from './ThemeSwitcher'
 import { navList } from './navList'
 import Avatar from '@/static/img/avatar.jpg'
@@ -11,21 +10,19 @@ type Props = {
   children?: ReactNode
 }
 
-const PlainHeader: FC<Props> = () => {
+const StickyHeader = forwardRef<HTMLElement, Props>((props, ref) => {
   return (
     <header
-      className={`${styles['nav-header']} sticky-header backdrop-blur-sm bg-l-white/90-d-slate-600 shadow-sm shadow-l-default-d-slate-400 fixed top-0 left-0 right-0 p-4 sm:py-2 lg:px-8 rounded-b-lg sm:rounded-none flex items-center justify-between z-10`}
+      ref={ref}
+      className={`${styles['nav-header']} ${styles['sticky-header']} backdrop-blur-sm bg-l-white/90-d-slate-600 fixed mt-0 top-0 mx-auto p-4 rounded-b-lg shadow-sm flex items-center justify-between z-10`}
     >
       <div className="left flex items-center">
         <Link
           href="/"
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden flex justify-center items-center"
+          className="block w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden"
         >
-          <Image
+          <img
             src={Avatar.src}
-            alt="avatar"
-            width={Avatar.width}
-            height={Avatar.height}
             className="object-cover w-8 h-8 sm:w-12 sm:h-12"
           />
         </Link>
@@ -44,10 +41,8 @@ const PlainHeader: FC<Props> = () => {
 
       <div className="right flex items-center">
         <ThemeSwitcher></ThemeSwitcher>
-        <ul
-          className="hidden md:flex nav-list text-l-gray-400-d-gray-400 items-center h-8 overflow-x-hidden"
-          v-if="screenType !== 'phone'"
-        >
+
+        <ul className="hidden md:flex nav-list text-l-gray-400-d-gray-400 items-center h-8 overflow-x-hidden">
           {navList.map((nav) => (
             <li
               className="mx-6 whitespace-nowrap transition-all duration-300 group"
@@ -80,6 +75,7 @@ const PlainHeader: FC<Props> = () => {
       </div>
     </header>
   )
-}
+})
 
-export default PlainHeader
+StickyHeader.displayName = 'StickyHeader'
+export default StickyHeader

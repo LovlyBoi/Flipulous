@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react'
+import Link from 'next/link'
 
 type NavListItem = {
   title: string
@@ -18,5 +19,15 @@ export const navList: NavListItem[] = [
   {
     title: '生活随笔',
     to: '/essays',
+  },
+  {
+    title: '管理文章',
+    render() {
+      return (
+        <Link href="http://siven.cc/cms/index.html" target="_blank">
+          管理文章
+        </Link>
+      )
+    },
   },
 ]

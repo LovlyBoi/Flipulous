@@ -1,0 +1,27 @@
+/* 下面一层小三角，灰色，模拟边框 */
+.up-arrow::before {
+  content: '';
+  z-index: 0;
+  display: block;
+  width: 8px;
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  border: 6px solid #cecece;
+  border-top: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+/* 上面一层小三角，白色 */
+.up-arrow::after {
+  content: '';
+  display: block;
+  width: 7px;
+  position: absolute;
+  top: -5px;
+  left: 19px;
+  border: 5px solid #fff;
+  border-top: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}

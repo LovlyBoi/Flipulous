@@ -22,10 +22,12 @@
     ]
   },
   "dependencies": {
+    "@uiw/react-codemirror": "^4.21.21",
     "axios": "^1.6.3",
     "bloomfilter": "^0.0.18",
     "dayjs": "^1.11.10",
     "immer": "^10.0.3",
+    "lodash-es": "^4.17.21",
     "masonry-layout": "^4.2.2",
     "next": "14.0.4",
     "react": "^18",

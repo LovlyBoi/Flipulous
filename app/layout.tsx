@@ -6,7 +6,7 @@ const RootLayout: FC<{ children?: ReactNode }> = ({ children }) => {
   return (
     <html lang="zh-CN">
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <body>
+      <body className='font-serif'>
         <DarkMode>{children}</DarkMode>
       </body>
     </html>

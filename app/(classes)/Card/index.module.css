@@ -86,11 +86,12 @@
 
 .skeleton-background {
   background: linear-gradient(
-    120deg,
-    rgba(226, 232, 240, 1) 40%,
-    rgba(232, 237, 241, 1) 50%,
-    rgba(226, 232, 240, 1) 60%
-  ) rgb(226, 232, 240);
+      120deg,
+      rgba(226, 232, 240, 1) 40%,
+      rgba(232, 237, 241, 1) 50%,
+      rgba(226, 232, 240, 1) 60%
+    )
+    rgb(226, 232, 240);
   background-size: 200%;
   background-position-x: 120%;
   animation: blink infinite 1400ms linear;
