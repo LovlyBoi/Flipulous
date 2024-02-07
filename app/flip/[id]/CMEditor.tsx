@@ -41,6 +41,12 @@ const options: BasicSetupOptions = {
   highlightActiveLine: false,
   foldGutter: false,
   rectangularSelection: false,
+  allowMultipleSelections: false,
+  syntaxHighlighting: false,
+  closeBrackets: false,
+  autocompletion: false,
+  crosshairCursor: false,
+  highlightSelectionMatches: false,
 }
 
 // 添加高亮
