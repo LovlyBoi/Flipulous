@@ -1,4 +1,9 @@
 .cm-editor-wrapper {
+  & :global(.cm-editor) {
+    border-radius: 6px;
+    margin-left: 1rem;
+  }
+  
   & :global(.ͼ1.cm-focused) {
     outline: none;
   }

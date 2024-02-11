@@ -24,9 +24,7 @@ type Props = {
   children?: ReactNode
 }
 
-const someArtcle = `Historically, developers had
-
-to use different languages (e.g. JavaScript, PHP) and frameworks when writing code for the server and the client. With React, developers can use the same language (JavaScript), and the same framework (e.g. Next.js or your framework of choice). This flexibility allows you to seamlessly write code for both environments without context switching.
+const someArtcle = `Historically, developers had to use different languages (e.g. JavaScript, PHP) and frameworks when writing code for the server and the client. With React, developers can use the same language (JavaScript), and the same framework (e.g. Next.js or your framework of choice). This flexibility allows you to seamlessly write code for both environments without context switching.
 
 However, each environment has its own set of capabilities and constraints. Therefore, the code you write for the server and the client is not always the same. There are certain operations (e.g. data fetching or managing user state) that are better suited for one environment over the other.
 
@@ -89,8 +87,12 @@ const highlightField = StateField.define<DecorationSet>({
 const highlightMark = Decoration.mark({ class: 'cm-highlight' })
 
 const highlightTheme = EditorView.baseTheme({
-  '.cm-editor': { backgroundColor: '#ffffff' },
-  '.cm-highlight': { backgroundColor: 'rgba(254, 240, 138, 0.8)' },
+  '.cm-editor': { backgroundColor: '#ffffff', borderRadius: '4px' },
+  '.cm-highlight': {
+    backgroundColor: 'rgba(254, 240, 138, 0.8)',
+    borderRadius: '4px',
+    display: 'inline-block',
+  },
 })
 
 // 将选中片段高亮
@@ -121,13 +123,13 @@ function highlightFragment(view: EditorView, from: number, to: number) {
 // 移除选中部分的高亮
 function removeHighlightSelection(view: EditorView) {
   let effects: StateEffect<unknown>[] = view.state.selection.ranges
-    .filter(r => !r.empty)
-    .map(({ from, to }) => removeHighlight.of({ from, to }));
+    .filter((r) => !r.empty)
+    .map(({ from, to }) => removeHighlight.of({ from, to }))
 
-  if (!effects.length) return false;
+  if (!effects.length) return false
 
-  view.dispatch({ effects });
-  return true;
+  view.dispatch({ effects })
+  return true
 }
 
 const CMEditor: FC<Props> = () => {

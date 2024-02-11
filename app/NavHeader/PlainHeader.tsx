@@ -6,12 +6,15 @@ import ThemeSwitcher from './ThemeSwitcher'
 import { navList } from './navList'
 import Avatar from '@/static/img/avatar.jpg'
 import styles from './index.module.css'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   children?: ReactNode
 }
 
 const PlainHeader: FC<Props> = () => {
+  const pathname = usePathname()
+
   return (
     <header
       className={`${styles['nav-header']} sticky-header backdrop-blur-sm bg-l-white/90-d-slate-600 shadow-sm shadow-l-default-d-slate-400 fixed top-0 left-0 right-0 p-4 sm:py-2 lg:px-8 rounded-b-lg sm:rounded-none flex items-center justify-between z-10`}
@@ -50,7 +53,9 @@ const PlainHeader: FC<Props> = () => {
         >
           {navList.map((nav) => (
             <li
-              className="mx-6 whitespace-nowrap transition-all duration-300 group"
+              className={`mx-6 whitespace-nowrap transition-all duration-300 group ${
+                pathname === nav.to ? 'text-gray-600 dark:text-gray-200' : ''
+              }`}
               key={nav.title}
             >
               {nav.render ? (

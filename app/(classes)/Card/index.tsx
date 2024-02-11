@@ -20,12 +20,12 @@ const Card: FC<Props> = ({ data }) => {
   const { id, title, tag, author, pictures, publishDate, updateDate } = data
 
   const picturesUrl = pictures.map((url) => {
-    const { pathname } = new URL(url)
+    // const { pathname } = new URL(url)
     let baseUrl = process.env.AXIOS_BASEURL
     if (baseUrl?.endsWith('/')) {
       baseUrl = baseUrl.slice(0, -1)
     }
-    return baseUrl + pathname
+    return baseUrl + url
   })
 
   const publishFrom = useMemo(

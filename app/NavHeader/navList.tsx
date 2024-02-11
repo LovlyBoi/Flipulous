@@ -13,21 +13,17 @@ export const navList: NavListItem[] = [
     to: '/',
   },
   {
-    title: '笔记',
-    to: '/notes',
+    title: '收藏',
+    to: '/favorites',
   },
   {
-    title: '生活随笔',
-    to: '/essays',
-  },
-  {
-    title: '管理文章',
+    title: '登录/注册',
     render() {
-      return (
-        <Link href="http://siven.cc/cms/index.html" target="_blank">
-          管理文章
-        </Link>
-      )
-    },
+      return <div>
+        <Link href="/login" className='hover:text-indigo-400'>登录</Link>
+        <span className='mx-[2px]'>/</span>
+        <Link href="/register" className='hover:text-indigo-400'>注册</Link>
+      </div>
+    }
   },
 ]
