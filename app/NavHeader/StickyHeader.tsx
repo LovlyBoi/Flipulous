@@ -1,5 +1,5 @@
 'use client'
-import { type FC, type ReactNode, forwardRef } from 'react'
+import { type ReactNode, forwardRef } from 'react'
 import Link from 'next/link'
 import ThemeSwitcher from './ThemeSwitcher'
 import { navList } from './navList'
@@ -31,10 +31,10 @@ const StickyHeader = forwardRef<HTMLElement, Props>((props, ref) => {
             href="/"
             className="text-l-gray-600-d-gray-200 text-sm sm:text-lg tracking-wider"
           >
-            浅秋细语
+            Flipulous
           </Link>
           <div className="text-l-gray-400-d-gray-400 text-xs tracking-wider font-thin">
-            智文的前端小站
+            Flip to translate
           </div>
         </div>
       </div>

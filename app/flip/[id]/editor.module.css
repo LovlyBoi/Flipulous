@@ -1,11 +1,18 @@
 .cm-editor-wrapper {
   & :global(.cm-editor) {
     border-radius: 6px;
+    background-color: #fff;
     margin-left: 1rem;
   }
   
   & :global(.ͼ1.cm-focused) {
     outline: none;
+  }
+
+  & :global(.cm-highlight::before) {
+    display: inline-block;
+    font-size: 12px;
+    content: attr(data-highlight-num);
   }
 
   & :global(*) {

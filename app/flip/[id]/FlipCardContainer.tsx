@@ -1,15 +1,23 @@
-import { type FC, type ReactNode } from 'react'
+'use client'
+import { useEffect, type FC, type ReactNode } from 'react'
 import FlipCard from './FlipCard'
+import { useHighlightItemStore } from './highlightStore'
 
 type Props = {
   children?: ReactNode
 }
 
 const FlipCardContainer: FC<Props> = () => {
+  const highlightItems = useHighlightItemStore((store) => store.highlightItems)
+
+  useEffect(() => {
+    console.log('highlightItems++', highlightItems)
+  }, [highlightItems])
+
   return (
     <div className="px-4 flex flex-col gap-4">
-      {[1, 2, 3, 4, 5].map((_, index) => {
-        return <FlipCard key={index} index={index + 1} />
+      {highlightItems.map((card, index) => {
+        return <FlipCard key={index} index={index + 1} card={card} />
       })}
     </div>
   )
