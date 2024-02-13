@@ -1,19 +1,29 @@
-import { type FC, type ReactNode } from 'react'
-import { useHighlightItemStore, type TranslatedItem } from './highlightStore'
+'use client'
+import { useEffect, type FC, type ReactNode } from 'react'
 import { StarOutline, Star, TrashOutline } from '@ricons/ionicons5'
+import Modal from 'react-modal'
+import { useHighlightItemStore, type TranslatedItem } from './highlightStore'
+import { useUserStore } from '@/app/(users)/userStore'
 
 type Props = {
   children?: ReactNode
   index: number
   card: TranslatedItem
+  openModal: () => void
 }
 
-const FlipCard: FC<Props> = ({ index, card }) => {
+const FlipCard: FC<Props> = ({ index, card, openModal }) => {
   const addFavorites = useHighlightItemStore((store) => store.addFavorites)
   const removeFavorites = useHighlightItemStore(
     (store) => store.removeFavorites,
   )
-  const removeHighlightView = useHighlightItemStore((store) => store.removeHighlightView)
+  const removeHighlightView = useHighlightItemStore(
+    (store) => store.removeHighlightView,
+  )
+
+  const token = useUserStore((store) => store.token)
+
+  const isLogin = !!token
 
   const isLoading = card.success == null
   const isFailure = card.success === false
@@ -21,6 +31,18 @@ const FlipCard: FC<Props> = ({ index, card }) => {
 
   function removeCard(from: number, to: number) {
     removeHighlightView?.(from, to)
+  }
+
+  function handleAddFavorties() {
+    if (isLogin) {
+      addFavorites(card.from, card.to)
+    } else {
+      openModal()
+    }
+  }
+
+  function handleRemoveFavorites() {
+    removeFavorites(card.from, card.to)
   }
 
   return (
@@ -40,18 +62,14 @@ const FlipCard: FC<Props> = ({ index, card }) => {
                 width={18}
                 height={18}
                 className="text-yellow-400 cursor-pointer"
-                onClick={() => {
-                  removeFavorites(card.from, card.to)
-                }}
+                onClick={handleRemoveFavorites}
               />
             ) : (
               <StarOutline
                 width={18}
                 height={18}
                 className="text-gray-300 hover:text-yellow-400 cursor-pointer"
-                onClick={() => {
-                  addFavorites(card.from, card.to)
-                }}
+                onClick={handleAddFavorties}
               />
             )
           ) : (

@@ -180,22 +180,6 @@ function highlightFragment(
   return highlights
 }
 
-// 移除选中部分的高亮
-function removeHighlightSelection(view: EditorView) {
-  const selections: SelectionRange[] = view.state.selection.ranges.filter(
-    (r) => !r.empty,
-  )
-
-  const effects: StateEffect<unknown>[] = selections.map(({ from, to }) =>
-    removeHighlight.of({ from, to }),
-  )
-
-  if (!effects.length) return false
-
-  view.dispatch({ effects })
-  return selections.map((s) => ({ from: s.from, to: s.to }))
-}
-
 // 移除指定部分的高亮
 function removeHighlightFragment(
   view: EditorView,
@@ -226,17 +210,16 @@ const CMEditor: FC<Props> = () => {
 
   const cmView = useRef<EditorView | null>(null)
 
-  // const addHighlightItem = useHighlightItemStore(
-  //   (store) => store.addHighlightItem,
-  // )
-  // const removeHighlightItem = useHighlightItemStore(
-  //   (store) => store.removeHighlightItem,
-  // )
   const setHighlightItems = useHighlightItemStore(
     (store) => store.setHighlightItems,
   )
   const hasHighlightItem = useHighlightItemStore((store) => store.has)
-  const registRemoveHighlightView = useHighlightItemStore((store) => store.registRemoveHighlightView)
+  const registRemoveHighlightView = useHighlightItemStore(
+    (store) => store.registRemoveHighlightView,
+  )
+  const registAddHighlightView = useHighlightItemStore(
+    (store) => store.registAddHighlightView,
+  )
 
   useEffect(() => {
     if (editor.current) {
@@ -246,7 +229,7 @@ const CMEditor: FC<Props> = () => {
       })
     }
     return () => cmView.current?.destroy()
-  }, [editor.current])
+  }, [])
 
   // 将选中部分添加高亮
   function tanslateSelection() {
@@ -258,6 +241,16 @@ const CMEditor: FC<Props> = () => {
     if (!newHighlightItems) return
     const hs = updateHighlightNumbers(cmView.current)
     hs && setHighlightItems(hs, newHighlightItems)
+  }
+
+  function addFragment(
+    fragments: { from: number; to: number; word: string }[],
+  ) {
+    if (!cmView.current) return
+    if (fragments.length === 0) return
+    const newHighlightItems = highlightFragment(cmView.current, fragments)
+    if (!newHighlightItems) return
+    updateHighlightNumbers(cmView.current)
   }
 
   // 将选中部分移除高亮
@@ -279,15 +272,15 @@ const CMEditor: FC<Props> = () => {
     if (!cmView.current) return
     const item = { from, to }
     if (!hasHighlightItem(item)) return
-    const removedHighlightItems = removeHighlightFragment(
-      cmView.current,
-      [item],
-    )
+    const removedHighlightItems = removeHighlightFragment(cmView.current, [
+      item,
+    ])
     if (!removedHighlightItems) return
     const hs = updateHighlightNumbers(cmView.current)
     hs && setHighlightItems(hs, undefined, removedHighlightItems)
   }
 
+  registAddHighlightView(addFragment)
   registRemoveHighlightView(removeFragment)
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {

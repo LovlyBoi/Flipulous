@@ -4,7 +4,7 @@ import PlainHeader from '@/app/NavHeader/PlainHeader'
 const UsersLayout: FC<{ children?: ReactNode }> = ({ children }) => {
   return (
     <>
-      <div className="">
+      <div>
         <PlainHeader />
         <div className="mt-[68px]">{children}</div>
       </div>
