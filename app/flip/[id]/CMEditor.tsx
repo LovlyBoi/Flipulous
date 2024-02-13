@@ -6,6 +6,8 @@ import {
   useEffect,
   KeyboardEventHandler,
   memo,
+  forwardRef,
+  useImperativeHandle,
 } from 'react'
 import {
   EditorState,
@@ -24,6 +26,7 @@ import { useHighlightItemStore } from './highlightStore'
 
 type Props = {
   children?: ReactNode
+  ref?: any
 }
 
 const someArtcle = `Historically, developers had to use different languages (e.g. JavaScript, PHP) and frameworks when writing code for the server and the client. With React, developers can use the same language (JavaScript), and the same framework (e.g. Next.js or your framework of choice). This flexibility allows you to seamlessly write code for both environments without context switching.
@@ -196,7 +199,7 @@ function removeHighlightSelection(view: EditorView) {
 // 移除指定部分的高亮
 function removeHighlightFragment(
   view: EditorView,
-  highlights: { from: number; to: number, word: string }[],
+  highlights: { from: number; to: number; word?: string }[],
 ) {
   if (highlights.length < 1) return false
   const effects: StateEffect<unknown>[] = highlights.map(({ from, to }) =>
@@ -233,6 +236,7 @@ const CMEditor: FC<Props> = () => {
     (store) => store.setHighlightItems,
   )
   const hasHighlightItem = useHighlightItemStore((store) => store.has)
+  const registRemoveHighlightView = useHighlightItemStore((store) => store.registRemoveHighlightView)
 
   useEffect(() => {
     if (editor.current) {
@@ -270,6 +274,21 @@ const CMEditor: FC<Props> = () => {
     const hs = updateHighlightNumbers(cmView.current)
     hs && setHighlightItems(hs, undefined, removedHighlightItems)
   }
+
+  function removeFragment(from: number, to: number) {
+    if (!cmView.current) return
+    const item = { from, to }
+    if (!hasHighlightItem(item)) return
+    const removedHighlightItems = removeHighlightFragment(
+      cmView.current,
+      [item],
+    )
+    if (!removedHighlightItems) return
+    const hs = updateHighlightNumbers(cmView.current)
+    hs && setHighlightItems(hs, undefined, removedHighlightItems)
+  }
+
+  registRemoveHighlightView(removeFragment)
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.ctrlKey && e.key === 'q') {

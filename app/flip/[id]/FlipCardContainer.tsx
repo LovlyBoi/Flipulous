@@ -10,9 +10,9 @@ type Props = {
 const FlipCardContainer: FC<Props> = () => {
   const highlightItems = useHighlightItemStore((store) => store.highlightItems)
 
-  useEffect(() => {
-    console.log('highlightItems++', highlightItems)
-  }, [highlightItems])
+  // useEffect(() => {
+  //   console.log('highlightItems++', highlightItems)
+  // }, [highlightItems])
 
   return (
     <div className="px-4 flex flex-col gap-4">
