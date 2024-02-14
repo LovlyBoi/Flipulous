@@ -26,7 +26,7 @@ import { useHighlightItemStore } from './highlightStore'
 
 type Props = {
   children?: ReactNode
-  ref?: any
+  article: string
 }
 
 const someArtcle = `Historically, developers had to use different languages (e.g. JavaScript, PHP) and frameworks when writing code for the server and the client. With React, developers can use the same language (JavaScript), and the same framework (e.g. Next.js or your framework of choice). This flexibility allows you to seamlessly write code for both environments without context switching.
@@ -193,12 +193,12 @@ function removeHighlightFragment(
   return highlights
 }
 
-const CMEditor: FC<Props> = () => {
+const CMEditor: FC<Props> = ({ article }) => {
   const editor = useRef<HTMLDivElement>(null)
 
   const cmState = useRef(
     EditorState.create({
-      doc: someArtcle,
+      doc: article,
       extensions: [
         EditorState.readOnly.of(true),
         EditorView.lineWrapping,

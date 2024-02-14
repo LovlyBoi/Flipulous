@@ -21,11 +21,12 @@ const Card: FC<Props> = ({ data }) => {
 
   const picturesUrl = pictures.map((url) => {
     // const { pathname } = new URL(url)
-    let baseUrl = process.env.AXIOS_BASEURL
-    if (baseUrl?.endsWith('/')) {
-      baseUrl = baseUrl.slice(0, -1)
-    }
-    return baseUrl + url
+    // let baseUrl = process.env.AXIOS_BASEURL
+    // if (baseUrl?.endsWith('/')) {
+    //   baseUrl = baseUrl.slice(0, -1)
+    // }
+    // return baseUrl + url
+    return url
   })
 
   const publishFrom = useMemo(

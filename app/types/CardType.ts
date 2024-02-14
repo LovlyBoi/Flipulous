@@ -9,6 +9,10 @@ export interface Card {
   pictures: string[]
 }
 
+export interface Article extends Card {
+  content: string
+}
+
 export type TagColor = 'yellow' | 'pink' | 'green' | 'indigo'
 
 export enum BlogType {

@@ -19,6 +19,8 @@ export interface TranslatedItem extends HighlightItem {
 }
 
 interface HighlightItemStore {
+  articleId: string | number
+  setArticleId: (id: string | number) => void
   highlightItems: (HighlightItem | TranslatedItem)[]
   removeHighlightView?: (from: number, to: number) => void
   registRemoveHighlightView: (fn: (from: number, to: number) => void) => void
@@ -38,6 +40,8 @@ interface HighlightItemStore {
 
 export const useHighlightItemStore = create<HighlightItemStore>()(
   (set, get) => ({
+    articleId: '',
+    setArticleId: (articleId) => set({ articleId }),
     highlightItems: [],
     has: (highlight) => {
       return get().highlightItems.some(
@@ -124,10 +128,16 @@ export const useHighlightItemStore = create<HighlightItemStore>()(
     },
     // 将高亮项目存储进local保存
     cacheHighlightItems: () => {
-      localStorage.setItem(
-        'highlightItems',
-        JSON.stringify(get().highlightItems),
-      )
+      const hs = localStorage.getItem('hsCache')
+      if (!hs) {
+        localStorage.setItem('hsCache', JSON.stringify({}))
+      }
+      const parsed = JSON.parse(localStorage.getItem('hsCache')!) as Record<
+        string,
+        HighlightItem[]
+      >
+      parsed[get().articleId + ''] = get().highlightItems
+      localStorage.setItem('hsCache', JSON.stringify(parsed))
     },
   }),
 )

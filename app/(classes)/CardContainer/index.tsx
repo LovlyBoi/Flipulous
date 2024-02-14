@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { masonryLoayout } from '@/utils/startMasonry'
-import { getBlogs } from '@/apis'
+import { getArticle } from '@/apis'
 import Card from '@/app/(classes)/Card'
 import CardSkeleton from '@/app/(classes)/Card/CardSkeleton'
 import type { Card as CardType } from '@/app/types'
@@ -14,7 +14,18 @@ type Props = {
 
 const skeletonPicNums = [2, 3, 2]
 
-const macroTask = () => new Promise((resolve) => setTimeout(resolve, 0))
+function handleCardData(list: any[]): CardType[] {
+  return list.map((item) => ({
+    id: item.id,
+    title: item.title,
+    author: item.author,
+    type: item.type,
+    tag: { name: item.tag_name, color: item.tag_color },
+    publishDate: item.create_time,
+    updateDate: item.create_time,
+    pictures: item.pics.split(' '),
+  }))
+}
 
 const CardContainer: FC<Props> = ({ type = 'all' }) => {
   const [cards, setCards] = useState<CardType[]>([])
@@ -35,11 +46,13 @@ const CardContainer: FC<Props> = ({ type = 'all' }) => {
   useEffect(() => {
     let ignore = false
 
-    getBlogs(type)
-      .then(({ cards, hasNext }) => {
+    getArticle(page.pn, page.ps)
+      .then(({ data, code, msg }) => {
         if (ignore) throw new Error('ignore')
+        if (code !== 200) throw new Error(msg)
+        const { list, hasNext } = data
         hasNextSetterRef.current(hasNext)
-        cardsSetterRef.current(cards)
+        cardsSetterRef.current(handleCardData(list))
         loadingSetterRef.current(false)
       })
       .catch((error) => {
@@ -52,7 +65,7 @@ const CardContainer: FC<Props> = ({ type = 'all' }) => {
     return () => {
       ignore = true
     }
-  }, [type])
+  }, [])
 
   useEffect(() => {
     if (cards.length) {
@@ -65,8 +78,11 @@ const CardContainer: FC<Props> = ({ type = 'all' }) => {
 
   const handleLoadMoreCard = () => {
     loadingMoreSetterRef.current(true)
-    getBlogs(type, page.ps, page.pn + 1)
-      .then(({ cards, hasNext }) => {
+    getArticle(page.pn + 1, page.ps)
+      .then(({ data, code, msg }) => {
+        if (code !== 200) throw new Error(msg)
+        const { list, hasNext } = data
+        const cards = handleCardData(list)
         cardsSetterRef.current((prev) => [...prev, ...cards])
         hasNextSetterRef.current(hasNext)
         pageSetterRef.current((prev) => ({ ...prev, pn: prev.pn + 1 }))
