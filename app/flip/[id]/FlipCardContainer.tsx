@@ -16,9 +16,18 @@ const FlipCardContainer: FC<Props> = () => {
   const pathname = usePathname()
 
   const highlightItems = useHighlightItemStore((store) => store.highlightItems)
-  const cacheHighlightItems = useHighlightItemStore((store) => store.cacheHighlightItems)
+  const cacheHighlightItems = useHighlightItemStore(
+    (store) => store.cacheHighlightItems,
+  )
+  const setHighlightItems = useHighlightItemStore(
+    (store) => store.setHighlightItems,
+  )
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  useEffect(() => {
+    setHighlightItems([], undefined, undefined, false)
+  }, [setHighlightItems])
 
   useEffect(() => {
     Modal.setAppElement(document.body)
@@ -33,7 +42,6 @@ const FlipCardContainer: FC<Props> = () => {
   }
 
   function handleToLoginPage() {
-    console.log(pathname)
     cacheHighlightItems()
     localStorage.setItem('originPath', pathname)
     router.push('/login')

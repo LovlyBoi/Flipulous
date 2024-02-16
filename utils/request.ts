@@ -5,6 +5,14 @@ const instance = axios.create({
   baseURL: process.env.AXIOS_BASEURL,
 })
 
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.token = token
+  }
+  return config
+})
+
 async function request<T>(config: AxiosRequestConfig): Promise<T> {
   const { data } = await instance.request<T>(config)
   return data

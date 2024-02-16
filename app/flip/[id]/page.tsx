@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { resolve } from 'node:url'
 import { notFound } from 'next/navigation'
 import FlipCardContainer from './FlipCardContainer'
@@ -13,10 +13,7 @@ type Props = {
 // fetch 缓存时间
 export const revalidate = 3600
 
-async function getArticleData(
-  id: string,
-  visitorId?: string,
-): Promise<Article> {
+async function getArticleData(id: string): Promise<Article> {
   const fetchUrl = resolve(
     process.env.FETCH_BASEURL as string,
     `/article/queryById?id=${id}`,

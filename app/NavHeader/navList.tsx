@@ -44,6 +44,22 @@ function LoginButton() {
   )
 }
 
+function FavoriteLink() {
+  'use client'
+
+  const token = useUserStore((store) => store.token)
+
+  return (
+    <>
+      {token ? (
+        <Link href="/favorites">收藏</Link>
+      ) : (
+        <span className="cursor-not-allowed">收藏</span>
+      )}
+    </>
+  )
+}
+
 export const navList: NavListItem[] = [
   {
     title: '全部',
@@ -51,12 +67,10 @@ export const navList: NavListItem[] = [
   },
   {
     title: '收藏',
-    to: '/favorites',
+    render: () => <FavoriteLink />,
   },
   {
     title: '登录/注册',
-    render() {
-      return <LoginButton />
-    },
+    render: () => <LoginButton />,
   },
 ]

@@ -2,10 +2,10 @@
 import { useState, useEffect, useRef, memo } from 'react'
 import type { FC, ReactNode } from 'react'
 import { masonryLoayout } from '@/utils/startMasonry'
-import { getArticle } from '@/apis'
 import Card from '@/app/(classes)/Card'
 import CardSkeleton from '@/app/(classes)/Card/CardSkeleton'
 import type { Card as CardType } from '@/app/types'
+import { getArticle, getFavorites } from '@/apis'
 
 type Props = {
   children?: ReactNode
@@ -44,9 +44,15 @@ const CardContainer: FC<Props> = ({ type = 'all' }) => {
   const pageSetterRef = useRef(setPage)
 
   useEffect(() => {
-    let ignore = false
+    
+  })
 
-    getArticle(page.pn, page.ps)
+  useEffect(() => {
+    let ignore = false
+    console.log('type', type)
+    let action = type === 'favorites' ? getFavorites : getArticle
+
+    action(page.pn, page.ps)
       .then(({ data, code, msg }) => {
         if (ignore) throw new Error('ignore')
         if (code !== 200) throw new Error(msg)
@@ -78,7 +84,9 @@ const CardContainer: FC<Props> = ({ type = 'all' }) => {
 
   const handleLoadMoreCard = () => {
     loadingMoreSetterRef.current(true)
-    getArticle(page.pn + 1, page.ps)
+    let action = type === 'favorite' ? getFavorites : getArticle
+
+    action(page.pn + 1, page.ps)
       .then(({ data, code, msg }) => {
         if (code !== 200) throw new Error(msg)
         const { list, hasNext } = data

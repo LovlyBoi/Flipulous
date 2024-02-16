@@ -31,6 +31,7 @@ interface HighlightItemStore {
     highlightItems: HighlightItem[],
     addItems?: { from: number; to: number; word: string }[],
     removeItems?: { from: number; to: number; word?: string }[],
+    setCache?: boolean,
   ) => void
   changeHighlightItem: (from: number, to: number, payload: any) => void
   addFavorites: (from: number, to: number) => void
@@ -68,7 +69,12 @@ export const useHighlightItemStore = create<HighlightItemStore>()(
         }
       })
     },
-    setHighlightItems: (highlightItems, addItems, removeItems) => {
+    setHighlightItems: (
+      highlightItems,
+      addItems,
+      removeItems,
+      setCache = true,
+    ) => {
       const oldItems = get().highlightItems
       for (let i = 0; i < highlightItems.length; i++) {
         const item = highlightItems[i]
@@ -104,7 +110,7 @@ export const useHighlightItemStore = create<HighlightItemStore>()(
               }
             })
             .finally(() => {
-              get().cacheHighlightItems()
+              setCache && get().cacheHighlightItems()
             })
         })
       } else if (removeItems) {
@@ -114,7 +120,7 @@ export const useHighlightItemStore = create<HighlightItemStore>()(
       set(() => ({
         highlightItems,
       }))
-      get().cacheHighlightItems()
+      setCache && get().cacheHighlightItems()
     },
     addFavorites: (from, to) => {
       get().changeHighlightItem(from, to, {

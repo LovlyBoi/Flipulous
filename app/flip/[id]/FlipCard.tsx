@@ -1,9 +1,11 @@
 'use client'
-import { useEffect, type FC, type ReactNode } from 'react'
+import { type FC, type ReactNode } from 'react'
 import { StarOutline, Star, TrashOutline } from '@ricons/ionicons5'
-import Modal from 'react-modal'
+import { useParams } from 'next/navigation'
 import { useHighlightItemStore, type TranslatedItem } from './highlightStore'
 import { useUserStore } from '@/app/(users)/userStore'
+import { addFavoritesTranslation, removeFavoritesTranslation } from '@/apis'
+import toast from 'react-hot-toast'
 
 type Props = {
   children?: ReactNode
@@ -13,6 +15,8 @@ type Props = {
 }
 
 const FlipCard: FC<Props> = ({ index, card, openModal }) => {
+  const { id } = useParams()
+
   const addFavorites = useHighlightItemStore((store) => store.addFavorites)
   const removeFavorites = useHighlightItemStore(
     (store) => store.removeFavorites,
@@ -26,23 +30,42 @@ const FlipCard: FC<Props> = ({ index, card, openModal }) => {
   const isLogin = !!token
 
   const isLoading = card.success == null
-  const isFailure = card.success === false
   const isSuccess = card.success === true
 
   function removeCard(from: number, to: number) {
     removeHighlightView?.(from, to)
   }
 
-  function handleAddFavorties() {
+  async function handleAddFavorties() {
     if (isLogin) {
-      addFavorites(card.from, card.to)
+      const idNumber = Number.parseInt(id as string)
+      const { code } = await addFavoritesTranslation(idNumber, card)
+      if (code !== 200) {
+        toast.error('添加收藏失败')
+      } else {
+        addFavorites(card.from, card.to)
+      }
     } else {
       openModal()
     }
   }
 
-  function handleRemoveFavorites() {
-    removeFavorites(card.from, card.to)
+  async function handleRemoveFavorites() {
+    if (isLogin) {
+      const idNumber = Number.parseInt(id as string)
+      const { code } = await removeFavoritesTranslation(
+        idNumber,
+        card.from,
+        card.to,
+      )
+      if (code !== 200) {
+        toast.error('删除收藏失败')
+      } else {
+        removeFavorites(card.from, card.to)
+      }
+    } else {
+      openModal()
+    }
   }
 
   return (
@@ -91,27 +114,29 @@ const FlipCard: FC<Props> = ({ index, card, openModal }) => {
           <>
             <p>
               {'发音: '}
-              <span className=" text-gray-500">{card.accent}</span>
+              <span className="text-gray-500 tracking-wider">
+                {card.accent}
+              </span>
             </p>
             <p>
               {'英译: '}
-              <span className=" text-gray-500">{card.mean_en}</span>
+              <span className="text-gray-500">{card.mean_en}</span>
             </p>
             <p>
               {'中译: '}
-              <span className=" text-gray-500">{card.mean_cn}</span>
+              <span className="text-gray-500">{card.mean_cn}</span>
             </p>
             <p>
               {'例句: '}
-              <span className=" text-gray-500">{card.sentence}</span>
+              <span className="text-gray-500">{card.sentence}</span>
             </p>
             <p>
               {'例句中译: '}
-              <span className=" text-gray-500">{card.sentence_trans}</span>
+              <span className="text-gray-500">{card.sentence_trans}</span>
             </p>
           </>
         ) : (
-          <div className=" text-gray-500">
+          <div className="text-gray-500">
             翻译失败，数据库好像没有收录这个词~
           </div>
         )}
